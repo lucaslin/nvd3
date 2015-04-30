@@ -6,8 +6,8 @@ nv.models.legend = function() {
     //------------------------------------------------------------
 
     var margin = {top: 5, right: 0, bottom: 5, left: 0}
-        , width = 400
-        , height = 20
+        , width = null
+        , height = null
         , getKey = function(d) { return d.key }
         , color = nv.utils.getColor()
         , align = true
