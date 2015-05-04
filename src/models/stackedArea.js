@@ -99,7 +99,8 @@ nv.models.stackedArea = function() {
 
             wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-            console.log(scatter.forceY())
+            // If the user has not specified forceY, make sure 0 is included in the domain
+            // Otherwise, use user specified values for forceY
             if (scatter.forceY().length == 0) {
                 scatter.forceY().push(0);
             }
