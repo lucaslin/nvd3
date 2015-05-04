@@ -79,8 +79,9 @@ nv.models.stackedArea = function() {
                 .x(getX)
                 .y(getY)
                 .out(function(d, y0, y) {
+                    var yHeight = (getY(d) === 0) ? 0 : y;
                     d.display = {
-                        y: y,
+                        y: yHeight,
                         y0: y0
                     };
                 })
@@ -98,12 +99,16 @@ nv.models.stackedArea = function() {
 
             wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+            console.log(scatter.forceY())
+            if (scatter.forceY().length == 0) {
+                scatter.forceY().push(0);
+            }
+
             scatter
                 .width(availableWidth)
                 .height(availableHeight)
                 .x(getX)
                 .y(function(d) { return d.display.y + d.display.y0 })
-                .forceY([0])
                 .color(data.map(function(d,i) {
                     return d.color || color(d, d.seriesIndex);
                 }));
@@ -294,9 +299,6 @@ nv.models.stackedArea = function() {
                     chart.order('inside-out');
                     break;
                 case 'expand':
-                    chart.offset('expand');
-                    chart.order('default');
-                    break;
                 case 'stack_percent':
                     chart.offset(chart.d3_stackedOffset_stackPercent);
                     chart.order('default');
